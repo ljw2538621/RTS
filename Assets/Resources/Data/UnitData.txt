@@ -1,0 +1,13 @@
+﻿id;名称;类型;血量;移动速度;攻击力;攻击间隔;攻击范围;转向速度;食物;木材;石头;预制体路径;图标路径;介绍;
+1001;村民;1;100;5.0;80.0;2.0;1.0;10.0;10;0;0;Prefabs/Unit/Villager;Sprite/Villager;负责收集物资和建筑房屋;
+1002;弓箭手;2;300;8.0;150.0;1.5;6.0;10.0;20;10;0;Prefabs/Unit/Archer;Sprite/Archer;给我一把弓，我为你夺得一座城;
+1003;投掷器;2;1000;3.0;200.0;3.0;8.0;10.0;25;20;20;Prefabs/Unit/Catapult;Sprite/Catapult;你猜我投掷的石头，还是什么？;
+1004;国王;5;2000;5.0;1.0;2.0;0.1;10.0;10;0;0;Prefabs/Unit/Converter;Sprite/Converter;我是国王，你是谁？;
+1005;火箭手;2;280;8.0;250;1.5;6.0;10.0;25;20;0;Prefabs/Unit/FireArcher;Sprite/Archer;我只会玩火，所以给我一把弓，我为你烧了一座城;
+1006;巫师;3;300;6.0;50.0;1.0;2.0;10.0;50;15;0;Prefabs/Unit/Healer;Sprite/Healer;我是医师，不是巫师！;
+1007;骑士;2;800;7.5;200.0;1.5;1.5;10.0;30;10;10;Prefabs/Unit/Knight;Sprite/Knight;冲啊，骑士必胜！；
+1008;兽人;2;400;8.5;100.0;1.2;1.5;10.0;20;5;0;Prefabs/Unit/Orc;Sprite/Orc;！@#￥%……&*;
+1009;攻城车;2;1500;10.0;0.25;2.0;5.0;10.0;10;50;40;Prefabs/Unit/SiegeTower;Sprite/SiegeTower;我带你勇闯天涯！;
+1010;飞船;4;1200;15.0;800.0;2.0;3.0;10.0;20;100;100;Prefabs/Unit/SpaceCraft;Sprite/Spacecraft;飞~;
+1011;矛兵;2;350;8.0;220.0;1.8;6.0;10.0;20;5;15;Prefabs/Unit/Spearman;Sprite/Spearman;我的矛，必将贯穿你的心脏！;
+1101;学者;1;100;5.0;80.0;2.0;1.0;10.0;10;0;0;Prefabs/Unit/Villager;Sprite/Villager;书中自有黄金屋，知识才是一起！;

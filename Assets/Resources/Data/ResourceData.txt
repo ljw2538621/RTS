@@ -1,0 +1,5 @@
+﻿ID;名称;类型;容量;一次收集数量;预制体;图标;描述;
+3101;南瓜田;1;800;30;Prefabs/Resource/Food_Pumpkin;Sprite/Resource/Food;一块普普通通的南瓜田，里面种了四个超大的南瓜，可以提供非常多的食物！;
+3201;松树;2;200;50;Prefabs/Resource/Wood_Tree;Sprite/Resource/Wood;松树，冲，让你的农民砍到它！;
+3301;铜矿堆;3;1000;25;Prefabs/Resource/Metal_Rocks;Sprite/Resource/Metal;一堆铜矿，很丑，还特别难采集！;
+3501;礼物;5;200;200;Prefabs/Resource/Treasure;Sprite/Resource/Gift;资源随机奖励，快来试试你的手气吧;

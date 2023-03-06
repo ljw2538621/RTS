@@ -1,0 +1,8 @@
+﻿ID;名称;MaxHp;范围;数据1;数据2;数据3;数据4;食物;木头;石头;书;预制体;图标;描述;
+2001;居住小屋;800;5;5;0;0;0;25;100;10;0;Prefabs/Building/House_Survivors;Sprite/House;普通的小屋，可以增加人数上限;
+2002;主城;2000;5;300;300;300;50;50;100;150;100;Prefabs/Building/Capital;Sprite/Capital;这是你的主城，可以雇佣农民;
+2003;仓库;1400;5;150;150;150;50;20;100;20;0;Prefabs/Building/Warehouse;Sprite/Warehouse;资源仓库，可以增加资源上限，注意防火防盗;
+2004;图书馆;1000;5;5;1101;5;10;50;120;20;0;Prefabs/Building/Library;Sprite/Library;国家图书馆，知识的发源地;
+2005;兵营;1000;5;0;0;0;0;50;120;20;0;Prefabs/Building/Barrack;Sprite/Barrack;军中兵营，可以招募士兵守卫你的国家;
+2006;前哨站;800;5;10;1;0.2;0;30;100;20;0;Prefabs/Building/SmallTower;Sprite/SmallTower;前哨站，派遣弓箭手驻守，可以增加范围和伤害。解锁新科技可以升级为瞭望塔;
+2007;瞭望塔;1200;5;12;2;0.25;0;30;100;20;20;Prefabs/Building/TallTower;Sprite/TallTower;前哨站的升级建筑，派遣弓箭手驻守，提供更广的视野和伤害;
