@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using static Villager;
+using UnityEngine.EventSystems;
 
 public enum UnitType
 {
@@ -103,6 +103,7 @@ public class UnitBase : MonoBehaviour
 
     protected void BaseStart()
     {
+        m_BloodBar.SetActive(false);
     }
 
     protected void BaseUpdate()
@@ -237,8 +238,11 @@ public class UnitBase : MonoBehaviour
             {
                 m_Data.hp = 0;
                 m_IsLive = false;
+                m_Animator.SetBool("IsDead", true);
+                m_Master.GetComponent<MasterBase>().RemoveUnitFromList(gameObject);
             }
         }
+        RefreshBloodBar();
     }
 
     public virtual void AttackAction(GameObject other)
@@ -407,6 +411,20 @@ public class UnitBase : MonoBehaviour
                 m_PlaneObj.SetActive(false);
             }
             m_IsSelect = IsSelect;
+            m_BloodBar.SetActive(IsSelect);
+        }
+    }
+
+    public void OnMouseEnter()
+    {
+        m_BloodBar.SetActive(true);
+    }
+
+    public void OnMouseExit()
+    {
+        if (!m_IsSelect)
+        {
+            m_BloodBar.SetActive(false);
         }
     }
 }

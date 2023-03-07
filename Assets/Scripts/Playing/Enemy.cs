@@ -227,7 +227,7 @@ public class Enemy : MasterBase
                         List<GameObject> unitList = m_Data.unitDictionary[enumer.Current];
                         for (int j = 0; j < unitList.Count; ++j)
                         {
-                            m_SelectUnitList.Add(unitList[i]);
+                            m_SelectUnitList.Add(unitList[j]);
                         }
                     }
                 }
@@ -320,6 +320,7 @@ public class Enemy : MasterBase
         GameObject unit = GameObject.Instantiate(unitManagerData.prefabs);
         unit.transform.SetParent(m_Unit.transform);
         unit.GetComponent<UnitBase>().SetData(unitManagerData.data);
+        unit.GetComponent<UnitBase>().SetBloodBarMaterial(false);
         unit.GetComponent<UnitBase>().m_Master = gameObject;
         m_UnitList.Add(unit);
         m_Data.unitDictionary[id].Add(unit);

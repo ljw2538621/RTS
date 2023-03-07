@@ -281,7 +281,7 @@ public class Player : MasterBase
 
                 if (Physics.Raycast(_ray, out _hitpoint, 999.0f, layerMask))
                 {
-                    m_BuildingInHand.transform.position = _hitpoint.point;
+                    m_BuildingInHand.transform.position = _hitpoint.point + new Vector3(0, 0.0001f, 0);
                 }
 
                 if (Input.GetMouseButtonDown(0))
@@ -468,6 +468,7 @@ public class Player : MasterBase
         GameObject unit = GameObject.Instantiate(unitManagerData.prefabs);
         unit.transform.SetParent(m_Unit.transform);
         unit.GetComponent<UnitBase>().SetData(unitManagerData.data);
+        unit.GetComponent<UnitBase>().SetBloodBarMaterial(true);
         unit.GetComponent<UnitBase>().m_Master = gameObject;
         m_UnitList.Add(unit);
         m_Resource.people = m_UnitList.Count;

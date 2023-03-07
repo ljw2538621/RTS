@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Archer : UnitBase
 {
+    protected static int count = 0;
+    protected int index;
+
     private void Awake()
     {
         base.BaseAwake();

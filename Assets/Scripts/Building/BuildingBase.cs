@@ -118,6 +118,7 @@ public class BuildingBase : MonoBehaviour
 
     protected void BaseStart()
     {
+        m_BloodBar.SetActive(false);
     }
 
     protected void BaseUpdate()
@@ -335,7 +336,6 @@ public class BuildingBase : MonoBehaviour
         if (isOpen)
         {
             m_AudioSource.Play();
-            m_Plane.SetActive(true);
             if (user == m_Master)
             {
                 m_MessageMenu.SetActive(true);
@@ -344,12 +344,14 @@ public class BuildingBase : MonoBehaviour
         }
         else
         {
-            m_Plane.SetActive(false);
             if (user == m_Master)
             {
                 m_MessageMenu.SetActive(false);
             }
         }
+        m_Plane.SetActive(isOpen);
+        m_BloodBar.SetActive(isOpen);
+        m_IsSelect = isOpen;
     }
 
     public virtual void BuildingNormalActionUpdate()
@@ -451,5 +453,18 @@ public class BuildingBase : MonoBehaviour
             }
         }
         return count;
+    }
+
+    public void OnMouseEnter()
+    {
+        m_BloodBar.SetActive(true);
+    }
+
+    public void OnMouseExit()
+    {
+        if (!m_IsSelect)
+        {
+            m_BloodBar.SetActive(false);
+        }
     }
 }

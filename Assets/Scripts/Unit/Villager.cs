@@ -82,10 +82,17 @@ public class Villager : UnitBase
                     {
                         m_ActionWaitTime -= m_Data.attackSpeed;
                         m_AudioSource.PlayOneShot(Global.Clip_Construction);
-                        m_Building.GetComponent<BuildingBase>().AddHp(m_Data.attack);
-                        Vector3 v3 = m_Building.transform.position;
-                        v3.y = transform.position.y;
-                        transform.LookAt(v3);
+                        if (m_Building.GetComponent<BuildingBase>().AddHp(m_Data.attack))
+                        {
+                            Vector3 v3 = m_Building.transform.position;
+                            v3.y = transform.position.y;
+                            transform.LookAt(v3);
+                        }
+                        else
+                        {
+                            SetIdleState();
+                            m_StateVillager = VillagerState.V_IDLE;
+                        }
                     }
                 }
             }
@@ -296,6 +303,7 @@ public class Villager : UnitBase
         base.SetIdleState();
         m_StateVillager = VillagerState.V_IDLE;
         transform.Find("Model/right/Hammer").gameObject.SetActive(false);
+        transform.Find("Model/DropOffBox").gameObject.SetActive(false);
         m_Building = null;
         m_Resource = null;
         m_Animator.runtimeAnimatorController = m_AnimatorControllerMain;

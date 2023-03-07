@@ -45,7 +45,6 @@ public class Barrack : BuildingBase
         if (isOpen)
         {
             m_AudioSource.Play();
-            m_Plane.SetActive(true);
             if (user == m_Master)
             {
                 m_MessageMenu.SetActive(true);
@@ -54,12 +53,14 @@ public class Barrack : BuildingBase
         }
         else
         {
-            m_Plane.SetActive(false);
             if (user == m_Master)
             {
                 m_MessageMenu.SetActive(false);
             }
         }
+        m_BloodBar.SetActive(isOpen);
+        m_Plane.SetActive(isOpen);
+        m_IsSelect = isOpen;
 
         if (m_State == BuildingState.BS_NORMAL)
         {
