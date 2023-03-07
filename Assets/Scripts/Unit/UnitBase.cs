@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using static Villager;
@@ -37,6 +38,7 @@ public class UnitBase : MonoBehaviour
 {
     public UnitData m_Data;
     public GameObject m_Master;
+    protected GameObject m_BloodBar;
     protected GameObject m_SpawnBuilding;
     protected float m_AttackWaitTime;
     protected bool m_IsSelect;
@@ -75,6 +77,7 @@ public class UnitBase : MonoBehaviour
         m_AudioSource = GetComponent<AudioSource>();
         //m_remainingDistance = 0.0f;
 
+        m_BloodBar = transform.Find("BloodBar").gameObject;
         m_PlaneObj = transform.Find("Plane").gameObject;
         m_PlaneObj.SetActive(false);
         m_IsSelect = false;
@@ -116,6 +119,16 @@ public class UnitBase : MonoBehaviour
 
     protected void BaseLateUpdate()
     {
+    }
+
+    public void SetBloodBarMaterial(bool isPlayer)
+    {
+        m_BloodBar.GetComponent<BloodBar>().SetBarMaterial(isPlayer);
+    }
+
+    public void RefreshBloodBar()
+    {
+        m_BloodBar.GetComponent<BloodBar>().SetBloodValue(m_Data.hp / m_Data.maxhp);
     }
 
     public void SetSpawnBuilding(GameObject go)

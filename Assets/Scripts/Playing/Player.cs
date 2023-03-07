@@ -35,6 +35,7 @@ public class Player : MasterBase
     private void Start()
     {
         base.BaseStart();
+        m_MainCapital.GetComponent<BuildingBase>().SetBloodBarMaterial(true);
         m_GameCamera = GameObject.Find("Main Camera");
 
         m_UiCanvas = GameObject.Find("UiCanvas");
@@ -455,6 +456,7 @@ public class Player : MasterBase
         GameObject go = GameObject.Instantiate(data.prefabs);
         go.GetComponent<BuildingBase>().SetBuildingData(data.data);
         go.GetComponent<BuildingBase>().SetMaster(gameObject);
+        go.GetComponent<BuildingBase>().SetBloodBarMaterial(true);
         go.GetComponent<BuildingBase>().SetState(BuildingState.BS_CREATE);
         m_BuildingInHand = go;
     }

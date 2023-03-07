@@ -103,7 +103,6 @@
     <Compile Include="Assets\RTS Engine\Attack Behavior\Scripts\DamageOverTime.cs" />
     <Compile Include="Assets\Scripts\Commom\UnitManager.cs" />
     <Compile Include="Assets\RTS Engine\Multiplayer\Scripts\InputManager.cs" />
-    <Compile Include="Assets\Scripts\Playing\LifeBar.cs" />
     <Compile Include="Assets\RTS Engine\Missions\Scripts\MissionSaveLoad.cs" />
     <Compile Include="Assets\RTS Engine\AI\Scripts\NPCManagerSingle.cs" />
     <Compile Include="Assets\RTS Engine\AI\Scripts\NPCUnitRegulatorInput.cs" />
@@ -154,6 +153,7 @@
     <Compile Include="Assets\RTS Engine\UI\Scripts\TaskUI.cs" />
     <Compile Include="Assets\Scripts\Playing\BuildBtn.cs" />
     <Compile Include="Assets\Scripts\Playing\Player.cs" />
+    <Compile Include="Assets\Scripts\Commom\BloodBar.cs" />
     <Compile Include="Assets\RTS Engine\Buildings\Scripts\ResourceGenerator.cs" />
     <Compile Include="Assets\RTS Engine\Units\Scripts\MovementManager.cs" />
     <Compile Include="Assets\Scripts\Playing\BuildMenu.cs" />

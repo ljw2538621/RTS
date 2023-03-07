@@ -65,6 +65,7 @@ public class BuildingBase : MonoBehaviour
     protected GameObject m_UnitSpawn;
     protected GameObject m_GotoPos;
     protected GameObject[] m_BuildingStateObjs;
+    protected GameObject m_BloodBar;
     protected NavMeshObstacle m_Obstacle;
     protected AudioSource m_AudioSource;
 
@@ -83,6 +84,7 @@ public class BuildingBase : MonoBehaviour
     protected void BaseAwake()
     {
         m_MessageMenu = GameObject.Find("UiCanvas/PlayerView/MessageMenu");
+        m_BloodBar = transform.Find("BloodBar").gameObject;
         int num = transform.Find("BuildingStateObjs").childCount;
         m_BuildingStateObjs = new GameObject[num];
         for (int i = 0; i < num; i++)
@@ -259,6 +261,7 @@ public class BuildingBase : MonoBehaviour
                 }
             }
         }
+        RefreshBloodBar();
         return true;
     }
 
@@ -269,6 +272,7 @@ public class BuildingBase : MonoBehaviour
         {
             m_data.hp = 0;
             m_IsLive = false;
+            RefreshBloodBar();
             return false;
         }
         else
@@ -285,6 +289,7 @@ public class BuildingBase : MonoBehaviour
                     }
                 }
             }
+            RefreshBloodBar();
             return true;
         }
     }
@@ -297,6 +302,16 @@ public class BuildingBase : MonoBehaviour
     public void SetBuildingData(BuildingData data)
     {
         m_data = data;
+    }
+
+    public void SetBloodBarMaterial(bool isPlayer)
+    {
+        m_BloodBar.GetComponent<BloodBar>().SetBarMaterial(isPlayer);
+    }
+
+    public void RefreshBloodBar()
+    {
+        m_BloodBar.GetComponent<BloodBar>().SetBloodValue(m_data.hp / m_data.maxhp);
     }
 
     public bool WorkerToWorkPos(GameObject worker)

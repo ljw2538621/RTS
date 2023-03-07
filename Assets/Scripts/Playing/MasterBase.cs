@@ -55,6 +55,7 @@ public class MasterBase : MonoBehaviour
         m_Resource.bookMax = (int)data.data.data4;
         m_MainCapital.GetComponent<Capital>().SetMaster(gameObject);
         m_MainCapital.GetComponent<Capital>().SetBuildingData(data.data);
+        m_MainCapital.GetComponent<BuildingBase>().RefreshBloodBar();
         m_MainCapital.GetComponent<Capital>().SetState(BuildingState.BS_NORMAL);
         m_MainCapital.GetComponent<Capital>().BeSelect(false, gameObject);
         m_MainCapital.GetComponent<NavMeshObstacle>().enabled = true;

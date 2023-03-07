@@ -52,6 +52,7 @@ public class Enemy : MasterBase
     private void Start()
     {
         base.BaseStart();
+        m_MainCapital.GetComponent<BuildingBase>().SetBloodBarMaterial(false);
         // 创建Ai指挥官数据统计结构
         // 创建建筑物字典
         m_Data.buildingDictionary = new Dictionary<int, List<GameObject>>();
@@ -197,6 +198,8 @@ public class Enemy : MasterBase
                                 }
                                 buildingInHand.GetComponent<BuildingBase>().BeSelect(false, gameObject);
                                 buildingInHand.GetComponent<BuildingBase>().SetMaster(gameObject);
+                                buildingInHand.GetComponent<BuildingBase>().SetBloodBarMaterial(false);
+                                buildingInHand.GetComponent<BuildingBase>().RefreshBloodBar();
                                 m_BuildingList.Add(buildingInHand);
                                 m_Data.buildingDictionary[buildingManagerData.data.id].Add(buildingInHand);
                                 for (int i = 0; i < m_SelectUnitList.Count; i++)
