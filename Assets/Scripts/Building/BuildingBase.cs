@@ -64,8 +64,10 @@ public class BuildingBase : MonoBehaviour
     protected GameObject[] m_WorkerArr;
     protected GameObject m_UnitSpawn;
     protected GameObject m_GotoPos;
+    protected GameObject m_BuildingStateObjParent;
     protected GameObject[] m_BuildingStateObjs;
     protected GameObject m_BloodBar;
+    protected GameObject m_BombEffect;
     protected NavMeshObstacle m_Obstacle;
     protected AudioSource m_AudioSource;
 
@@ -83,13 +85,16 @@ public class BuildingBase : MonoBehaviour
 
     protected void BaseAwake()
     {
+        m_BombEffect = transform.Find("NukeConeExplosionFire").gameObject;
+        m_BombEffect.SetActive(false);
         m_MessageMenu = GameObject.Find("UiCanvas/PlayerView/MessageMenu");
         m_BloodBar = transform.Find("BloodBar").gameObject;
         int num = transform.Find("BuildingStateObjs").childCount;
         m_BuildingStateObjs = new GameObject[num];
+        m_BuildingStateObjParent = transform.Find("BuildingStateObjs").gameObject;
         for (int i = 0; i < num; i++)
         {
-            m_BuildingStateObjs[i] = transform.Find("BuildingStateObjs").GetChild(i).gameObject;
+            m_BuildingStateObjs[i] = m_BuildingStateObjParent.transform.GetChild(i).gameObject;
             m_BuildingStateObjs[i].SetActive(false);
         }
         m_Plane = transform.Find("Plane").gameObject;
@@ -128,50 +133,60 @@ public class BuildingBase : MonoBehaviour
             switch (m_State)
             {
                 case BuildingState.BS_NONE:
-                break;
+                    break;
 
                 case BuildingState.BS_CREATE:
-                break;
+                    break;
 
                 case BuildingState.BS_ISNOCREATE:
-                break;
+                    break;
 
                 case BuildingState.BS_BUILDING:
-                {
-                    if (m_data.hp >= m_data.maxhp)
                     {
-                        m_data.hp = m_data.maxhp;
-                        transform.Find("UnderConstruction").gameObject.SetActive(false);
-                        Vector3 v3 = m_Model.transform.localPosition;
-                        v3.y = 0.0f;
-                        m_Model.transform.localPosition = v3;
-                        m_State = BuildingState.BS_NORMAL;
-                        for (int i = 0; i < m_WorkerArr.Length; i++)
+                        if (m_data.hp >= m_data.maxhp)
                         {
-                            if (m_WorkerArr[i] != null)
+                            m_data.hp = m_data.maxhp;
+                            transform.Find("UnderConstruction").gameObject.SetActive(false);
+                            Vector3 v3 = m_Model.transform.localPosition;
+                            v3.y = 0.0f;
+                            m_Model.transform.localPosition = v3;
+                            m_State = BuildingState.BS_NORMAL;
+                            for (int i = 0; i < m_WorkerArr.Length; i++)
                             {
-                                m_WorkerArr[i].GetComponent<UnitBase>().SetIdleState();
-                                m_WorkerArr[i] = null;
+                                if (m_WorkerArr[i] != null)
+                                {
+                                    m_WorkerArr[i].GetComponent<UnitBase>().SetIdleState();
+                                    m_WorkerArr[i] = null;
+                                }
                             }
                         }
+                        else
+                        {
+                            Vector3 v3 = m_Model.transform.localPosition;
+                            v3.y = -m_ModelHeight * ((m_data.maxhp - m_data.hp) / m_data.maxhp);
+                            m_Model.transform.localPosition = v3;
+                        }
                     }
-                    else
-                    {
-                        Vector3 v3 = m_Model.transform.localPosition;
-                        v3.y = -m_ModelHeight * ((m_data.maxhp - m_data.hp) / m_data.maxhp);
-                        m_Model.transform.localPosition = v3;
-                    }
-                }
-                break;
+                    break;
 
                 case BuildingState.BS_NORMAL:
-                {
-                    BuildingNormalActionUpdate();
-                }
-                break;
+                    {
+                        BuildingNormalActionUpdate();
+                    }
+                    break;
 
                 default:
-                break;
+                    break;
+            }
+        }
+        else
+        {
+            m_Model.transform.position += Vector3.down * Time.deltaTime * 1.0f;
+            m_BuildingStateObjParent.transform.position += Vector3.down * Time.deltaTime * 1.0f;
+            if (m_Model.transform.position.y < -m_ModelHeight)
+            {
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
             }
         }
     }
@@ -195,32 +210,32 @@ public class BuildingBase : MonoBehaviour
         switch (state)
         {
             case BuildingState.BS_NONE:
-            break;
+                break;
 
             case BuildingState.BS_CREATE:
-            break;
+                break;
 
             case BuildingState.BS_ISNOCREATE:
-            break;
+                break;
 
             case BuildingState.BS_BUILDING:
-            {
-                m_data.hp = 0.0f;
-                transform.Find("UnderConstruction").gameObject.SetActive(true);
-                Vector3 v3 = m_Model.transform.localPosition;
-                v3.y = -m_ModelHeight;
-                m_Model.transform.localPosition = v3;
+                {
+                    m_data.hp = 0.0f;
+                    transform.Find("UnderConstruction").gameObject.SetActive(true);
+                    Vector3 v3 = m_Model.transform.localPosition;
+                    v3.y = -m_ModelHeight;
+                    m_Model.transform.localPosition = v3;
 
-                m_Obstacle.enabled = true;
-                m_Obstacle.carving = true;
-            }
-            break;
+                    m_Obstacle.enabled = true;
+                    m_Obstacle.carving = true;
+                }
+                break;
 
             case BuildingState.BS_NORMAL:
-            break;
+                break;
 
             default:
-            break;
+                break;
         }
         m_State = state;
     }
@@ -273,6 +288,8 @@ public class BuildingBase : MonoBehaviour
         {
             m_data.hp = 0;
             m_IsLive = false;
+            m_BombEffect.SetActive(true);
+            m_Master.GetComponent<MasterBase>().RemoveBuildingFromList(gameObject);
             RefreshBloodBar();
             return false;
         }
@@ -453,6 +470,15 @@ public class BuildingBase : MonoBehaviour
             }
         }
         return count;
+    }
+
+    public void Suicide()
+    {
+        m_data.hp = 0;
+        m_IsLive = false;
+        m_BombEffect.SetActive(true);
+        m_Master.GetComponent<MasterBase>().RemoveBuildingFromList(gameObject);
+        RefreshBloodBar();
     }
 
     public void OnMouseEnter()

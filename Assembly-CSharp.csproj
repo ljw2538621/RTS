@@ -57,7 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\RTS Engine\Terrain\Scripts\TerrainManager.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXLoopScript.cs" />
+    <Compile Include="Assets\Epic Toon FX\Scripts\ETFXPitchRandomizer.cs" />
     <Compile Include="Assets\RTS Engine\Scripting\Scripts\Range.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXFireProjectile.cs" />
     <Compile Include="Assets\RTS Engine\Faction Entity\Scripts\FactionEntityHealth.cs" />
     <Compile Include="Assets\RTS Engine\Selection\Scripts\SelectedEntities.cs" />
     <Compile Include="Assets\RTS Engine\Buildings\Scripts\BuildingHealth.cs" />
@@ -75,6 +78,8 @@
     <Compile Include="Assets\RTS Engine\Scripting\Scripts\CodeCategoryField.cs" />
     <Compile Include="Assets\RTS Engine\UI\Scripts\PeaceTimeUI.cs" />
     <Compile Include="Assets\RTS Engine\Selection\Scripts\UnitGroupSelection.cs" />
+    <Compile Include="Assets\Epic Toon FX\Scripts\ETFXLightFade.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXButtonScript.cs" />
     <Compile Include="Assets\Scripts\Resource\MapResources.cs" />
     <Compile Include="Assets\RTS Engine\Minimap Camera\Scripts\MinimapIconManager.cs" />
     <Compile Include="Assets\RTS Engine\AI\Scripts\NPCBuildingCreator.cs" />
@@ -103,11 +108,13 @@
     <Compile Include="Assets\RTS Engine\Attack Behavior\Scripts\DamageOverTime.cs" />
     <Compile Include="Assets\Scripts\Commom\UnitManager.cs" />
     <Compile Include="Assets\RTS Engine\Multiplayer\Scripts\InputManager.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\VFX Library\ParticleEffectsLibrary.cs" />
     <Compile Include="Assets\RTS Engine\Missions\Scripts\MissionSaveLoad.cs" />
     <Compile Include="Assets\RTS Engine\AI\Scripts\NPCManagerSingle.cs" />
     <Compile Include="Assets\RTS Engine\AI\Scripts\NPCUnitRegulatorInput.cs" />
     <Compile Include="Assets\RTS Engine\AI\Scripts\NPCTypeInfo.cs" />
     <Compile Include="Assets\RTS Engine\AI\Scripts\NPCComponent.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXMouseOrbit.cs" />
     <Compile Include="Assets\RTS Engine\Faction Entity\Scripts\FactionEntity.cs" />
     <Compile Include="Assets\RTS Engine\Singleplayer\Scripts\LobbyManagerUI.cs" />
     <Compile Include="Assets\RTS Engine\Map Resources\Scripts\ResourceTypeInfo.cs" />
@@ -121,6 +128,7 @@
     <Compile Include="Assets\Scripts\Building\House.cs" />
     <Compile Include="Assets\RTS Engine\Missions\Scripts\ScenarioLoader.cs" />
     <Compile Include="Assets\RTS Engine\Maps\DemoMap\Scripts\UnitRagdollEffect.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\VFX Library\UICanvasManager.cs" />
     <Compile Include="Assets\RTS Engine\Buildings\Scripts\Border.cs" />
     <Compile Include="Assets\RTS Engine\Attack Behavior\Scripts\AttackDamage.cs" />
     <Compile Include="Assets\RTS Engine\Multiplayer\Scripts\MultiplayerHelper.cs" />
@@ -130,7 +138,9 @@
     <Compile Include="Assets\Scripts\Playing\BarrackMenu.cs" />
     <Compile Include="Assets\Scripts\Playing\SettingMenu.cs" />
     <Compile Include="Assets\RTS Engine\Units\Scripts\APC.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXTarget.cs" />
     <Compile Include="Assets\RTS Engine\AI\Scripts\NPCUnitRegulatorData.cs" />
+    <Compile Include="Assets\Epic Toon FX\Scripts\ETFXRotation.cs" />
     <Compile Include="Assets\Scripts\Unit\Villager.cs" />
     <Compile Include="Assets\RTS Engine\Scripting\Scripts\CustomEvents.cs" />
     <Compile Include="Assets\RTS Engine\Attack Behavior\Scripts\AttackObject.cs" />
@@ -214,8 +224,10 @@
     <Compile Include="Assets\RTS Engine\Game Managers\Scripts\AudioManager.cs" />
     <Compile Include="Assets\RTS Engine\Selection\Scripts\SelectionManager.cs" />
     <Compile Include="Assets\RTS Engine\Attack Behavior\Scripts\AttackWeapon.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXProjectileScript.cs" />
     <Compile Include="Assets\RTS Engine\Buildings\Scripts\BuildingPlacer.cs" />
     <Compile Include="Assets\RTS Engine\Tasks\Scripts\TaskLauncher.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXSceneManager.cs" />
     <Compile Include="Assets\RTS Engine\Tasks\Scripts\TaskManager.cs" />
     <Compile Include="Assets\RTS Engine\Missions\Scripts\ScenarioMenuUI.cs" />
     <Compile Include="Assets\RTS Engine\Upgrades\Scripts\UpgradeManager.cs" />
@@ -242,6 +254,7 @@
     <Compile Include="Assets\RTS Engine\Attack Behavior\Scripts\BuildingAttack.cs" />
     <Compile Include="Assets\RTS Engine\Attack Behavior\Scripts\AttackLOS.cs" />
     <Compile Include="Assets\RTS Engine\AI\Scripts\NPCBuildingPlacer.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\VFX Library\PEButtonScript.cs" />
     <Compile Include="Assets\RTS Engine\God Mode\GodMode.cs" />
     <Compile Include="Assets\RTS Engine\Units\Scripts\EscapeOnAttack.cs" />
     <Compile Include="Assets\RTS Engine\Missions\Scripts\Mission.cs" />
@@ -254,10 +267,13 @@
     <Compile Include="Assets\Scripts\Playing\UnitBtn.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Epic Toon FX\Prefabs\Environment\Environment FX.txt" />
     <None Include="Assets\RTS Engine\Maps\DemoMap\Kenney Assets\Castle Kit\License.txt" />
+    <None Include="Assets\Epic Toon FX\Prefabs\Combat\Combat FX.txt" />
     <None Include="Assets\Resources\Data\BarrackData.txt" />
     <None Include="Assets\Resources\Data\EnemyData.txt" />
     <None Include="Assets\RTS Engine\Third Party Assets.txt" />
+    <None Include="Assets\Epic Toon FX\Prefabs\Interactive\Interactive FX.txt" />
     <None Include="Assets\Resources\Data\UnitData.txt" />
     <None Include="Assets\Resources\Data\BuildingData.txt" />
     <None Include="Assets\Resources\Data\ResourceData.txt" />

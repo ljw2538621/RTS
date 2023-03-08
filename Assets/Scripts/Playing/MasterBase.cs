@@ -203,7 +203,38 @@ public class MasterBase : MonoBehaviour
 
     public virtual void RemoveBuildingFromList(GameObject buildingObject)
     {
+        //buildingObject.GetComponent<BuildingBase>().GetBuildingData().id;
         m_BuildingList.Remove(buildingObject);
+        if (buildingObject == m_MainCapital)
+        {
+            m_MainCapital = null;
+            int id = buildingObject.GetComponent<BuildingBase>().GetBuildingData().id;
+            for (int i = 0; i < m_BuildingList.Count; i++)
+            {
+                if (m_BuildingList[i].GetComponent<BuildingBase>().GetBuildingData().id == id)
+                {
+                    m_MainCapital = m_BuildingList[i];
+                    break;
+                }
+            }
+            if (m_MainCapital == null)
+            {
+                DestroyAllUnitAndBuilding();
+            }
+        }
+    }
+
+    public virtual void DestroyAllUnitAndBuilding()
+    {
+        while (m_UnitList.Count > 0)
+        {
+            m_UnitList[0].GetComponent<UnitBase>().Suicide();
+        }
+
+        while (m_BuildingList.Count > 0)
+        {
+            m_BuildingList[0].GetComponent<BuildingBase>().Suicide();
+        }
     }
 
     public GameObject GetMainCapital()

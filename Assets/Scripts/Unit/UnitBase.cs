@@ -39,6 +39,7 @@ public class UnitBase : MonoBehaviour
     public UnitData m_Data;
     public GameObject m_Master;
     protected GameObject m_BloodBar;
+    protected GameObject m_DeathEffect;
     protected GameObject m_SpawnBuilding;
     protected float m_AttackWaitTime;
     protected bool m_IsSelect;
@@ -52,6 +53,7 @@ public class UnitBase : MonoBehaviour
     protected Vector3 m_destination;
     protected GameObject m_AttackObject;
     protected bool m_IsAttack;
+    protected Transform m_FreeList;
 
     public bool m_IsLive
     {
@@ -63,6 +65,7 @@ public class UnitBase : MonoBehaviour
 
     protected void BaseAwake()
     {
+        m_FreeList = GameObject.Find("FreeList/Unit").transform;
         m_Data = new UnitData();
         m_Data.maxhp = 100.0f;
         m_Data.hp = m_Data.maxhp;
@@ -75,8 +78,9 @@ public class UnitBase : MonoBehaviour
         m_Navigate = GetComponent<NavMeshAgent>();
         m_Obstacle = GetComponent<NavMeshObstacle>();
         m_AudioSource = GetComponent<AudioSource>();
-        //m_remainingDistance = 0.0f;
 
+        m_DeathEffect = transform.Find("DeathEffect").gameObject;
+        m_DeathEffect.SetActive(false);
         m_BloodBar = transform.Find("BloodBar").gameObject;
         m_PlaneObj = transform.Find("Plane").gameObject;
         m_PlaneObj.SetActive(false);
@@ -99,6 +103,7 @@ public class UnitBase : MonoBehaviour
         m_IsLive = true;
         m_Animator.SetBool("IsDead", false);
         m_Animator.SetBool("IsIdle", true);
+        m_DeathEffect.SetActive(false);
     }
 
     protected void BaseStart()
@@ -116,6 +121,15 @@ public class UnitBase : MonoBehaviour
             }
             MoveUpdate();
         }
+        else
+        {
+            transform.position += Vector3.down * Time.deltaTime * 0.8f;
+            if (transform.position.y < -1.0f)
+            {
+                transform.SetParent(m_FreeList);
+                gameObject.SetActive(false);
+            }
+        }
     }
 
     protected void BaseLateUpdate()
@@ -132,14 +146,14 @@ public class UnitBase : MonoBehaviour
         m_BloodBar.GetComponent<BloodBar>().SetBloodValue(m_Data.hp / m_Data.maxhp);
     }
 
-    public void SetSpawnBuilding(GameObject go)
+    public void SetSpawnBuilding(GameObject obj)
     {
-        m_SpawnBuilding = go;
+        m_SpawnBuilding = obj;
     }
 
-    public virtual void SetAttackTarget(GameObject other)
+    public virtual void SetAttackTarget(GameObject target)
     {
-        m_AttackObject = other;
+        m_AttackObject = target;
         m_IsAttack = true;
     }
 
@@ -151,134 +165,142 @@ public class UnitBase : MonoBehaviour
         }
         else
         {
-            if (m_AttackObject == null)
+            if (m_AttackObject != null)
             {
-                return;
-            }
-
-            int attackState = -1;
-            // 返回 -1 代表无法攻击
-            // 返回 0  代表需要移动到对象位置
-            // 返回 1  代表可以攻击
-            string layer = LayerMask.LayerToName(m_AttackObject.layer);
-            switch (layer)
-            {
-                case "Unit":
+                int attackState = -1;
+                // 返回 -1 代表无法攻击
+                // 返回 0  代表需要移动到对象位置
+                // 返回 1  代表可以攻击
+                string layer = LayerMask.LayerToName(m_AttackObject.layer);
+                switch (layer)
                 {
-                    if (m_AttackObject.GetComponent<UnitBase>().m_IsLive)
-                    {
-                        if (Mathf.Abs((transform.position - m_AttackObject.transform.position).magnitude) >
-                            m_Data.attackRange)
+                    case "Unit":
                         {
-                            attackState = 0;
+                            if (m_AttackObject.GetComponent<UnitBase>().m_IsLive)
+                            {
+                                if (Mathf.Abs((transform.position - m_AttackObject.transform.position).magnitude) >
+                                    m_Data.attackRange)
+                                {
+                                    attackState = 0;
+                                }
+                                else
+                                {
+                                    attackState = 1;
+                                }
+                            }
+                            else
+                            {
+                                attackState = -1;
+                            }
                         }
-                        else
+                        break;
+
+                    case "Building":
                         {
-                            attackState = 1;
+                            if (m_AttackObject.GetComponent<BuildingBase>().m_IsLive)
+                            {
+                                if (Mathf.Abs((transform.position - m_AttackObject.transform.position).magnitude) >
+                                    m_Data.attackRange + m_AttackObject.GetComponent<BuildingBase>().GetBuildingData().range)
+                                {
+                                    attackState = 0;
+                                }
+                                else
+                                {
+                                    attackState = 1;
+                                }
+                            }
+                            else
+                            {
+                                attackState = -1;
+                            }
                         }
-                    }
-                    else
-                    {
-                        attackState = -1;
-                    }
+                        break;
                 }
-                break;
 
-                case "Building":
+                switch (attackState)
                 {
-                    if (m_AttackObject.GetComponent<BuildingBase>().m_IsLive)
-                    {
-                        if (Mathf.Abs((transform.position - m_AttackObject.transform.position).magnitude) >
-                            m_Data.attackRange + m_AttackObject.GetComponent<BuildingBase>().GetBuildingData().range)
+                    case -1:    //返回 -1 代表无法攻击
                         {
-                            attackState = 0;
+                            m_AttackObject = null;
                         }
-                        else
+                        break;
+
+                    case 0:     //返回 0  代表需要移动到对象位置
                         {
-                            attackState = 1;
+                            MoveTo(m_AttackObject.transform.position);
                         }
-                    }
-                    else
-                    {
-                        attackState = -1;
-                    }
-                }
-                break;
-            }
+                        break;
 
-            switch (attackState)
-            {
-                case -1:    //返回 -1 代表无法攻击
-                {
-                    m_AttackObject = null;
+                    case 1:     //返回 1  代表可以攻击
+                        {
+                            AttackAction(m_AttackObject);
+                        }
+                        break;
                 }
-                break;
-
-                case 0:     //返回 0  代表需要移动到对象位置
-                {
-                    MoveTo(m_AttackObject.transform.position);
-                }
-                break;
-
-                case 1:     //返回 1  代表可以攻击
-                {
-                    AttackAction(m_AttackObject);
-                }
-                break;
             }
         }
     }
 
-    public virtual void BeAttacked(float attack)
+    public virtual bool BeAttacked(float value)
     {
         if (m_IsLive)
         {
-            m_Data.hp -= attack;
-            if (m_Data.hp < 0)
+            m_Data.hp -= value;
+            if (m_Data.hp < 0.1)
             {
                 m_Data.hp = 0;
+                RefreshBloodBar();
                 m_IsLive = false;
                 m_Animator.SetBool("IsDead", true);
                 m_Master.GetComponent<MasterBase>().RemoveUnitFromList(gameObject);
+                m_DeathEffect.SetActive(true);
+                return false;
+            }
+            else
+            {
+                RefreshBloodBar();
+                return true;
             }
         }
-        RefreshBloodBar();
+        else
+        {
+            return false;
+        }
     }
 
-    public virtual void AttackAction(GameObject other)
+    public virtual void AttackAction(GameObject target)
     {
         m_MoveBool = false;
-        Vector3 eyeLine = other.transform.position - transform.position;
+        Vector3 eyeLine = target.transform.position - transform.position;
         eyeLine.y = transform.position.y;
         eyeLine.Normalize();
         transform.LookAt(transform.position + eyeLine);
 
-        if (other != null)
+        if (target != null)
         {
-            string layer = LayerMask.LayerToName(other.layer);
+            string layer = LayerMask.LayerToName(target.layer);
             switch (layer)
             {
                 case "Unit":
-                {
-                    if (other.GetComponent<UnitBase>().m_IsLive)
                     {
-                        other.GetComponent<UnitBase>().BeAttacked(m_Data.attack);
-                    }
-                }
-                break;
-
-                case "Building":
-                {
-                    if (other.GetComponent<BuildingBase>().m_IsLive)
-                    {
-                        if (!other.GetComponent<BuildingBase>().BeAttacked(m_Data.attack))
+                        if (!target.GetComponent<UnitBase>().BeAttacked(m_Data.attack))
                         {
-                            m_IsAttack = false;
-                            m_AttackObject = null;
                         }
                     }
-                }
-                break;
+                    break;
+
+                case "Building":
+                    {
+                        if (target.GetComponent<BuildingBase>().m_IsLive)
+                        {
+                            if (!target.GetComponent<BuildingBase>().BeAttacked(m_Data.attack))
+                            {
+                                m_IsAttack = false;
+                                m_AttackObject = null;
+                            }
+                        }
+                    }
+                    break;
             }
 
             if (!m_Animator.GetBool("IsAttacking"))
@@ -379,22 +401,20 @@ public class UnitBase : MonoBehaviour
         m_Animator.SetBool("IsCollecting", false);
     }
 
+    public void Suicide()       // 自杀
+    {
+        m_Data.hp = 0;
+        RefreshBloodBar();
+        m_IsLive = false;
+        m_Animator.SetBool("IsDead", true);
+        m_Master.GetComponent<MasterBase>().RemoveUnitFromList(gameObject);
+        m_DeathEffect.SetActive(true);
+    }
+
     public void SetData(UnitData data)
     {
         m_Data = data;
         m_Navigate.speed = m_Data.moveSpeed;
-    }
-
-    public void BeAssaulted(int value)
-    {
-        m_Data.hp -= value;
-        if (m_Data.hp <= 0)
-        {
-            m_Data.hp = 0;
-            m_IsLive = false;
-            m_Animator.SetBool("IsDead", true);
-            m_Master.GetComponent<MasterBase>().RemoveUnitFromList(gameObject);
-        }
     }
 
     public void BeSelect(bool IsSelect)

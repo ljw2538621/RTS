@@ -247,37 +247,37 @@ public class Enemy : MasterBase
                 switch (state)
                 {
                     case Villager.VillagerState.V_IDLE:
-                    {
-                        m_SelectUnitList.Add(villagerList[i]);
-                    }
-                    break;
+                        {
+                            m_SelectUnitList.Add(villagerList[i]);
+                        }
+                        break;
 
                     case Villager.VillagerState.V_TOGET:
                     case Villager.VillagerState.V_GETTING:
                     case Villager.VillagerState.V_PUTBACK:
-                    {
-                        switch (villagerList[i].GetComponent<Villager>().GetCollectingResourceType())
                         {
-                            case ResourceType.RT_FOOD:
+                            switch (villagerList[i].GetComponent<Villager>().GetCollectingResourceType())
                             {
-                                ++foodcount;
-                            }
-                            break;
+                                case ResourceType.RT_FOOD:
+                                    {
+                                        ++foodcount;
+                                    }
+                                    break;
 
-                            case ResourceType.RT_WOOD:
-                            {
-                                ++woodcount;
-                            }
-                            break;
+                                case ResourceType.RT_WOOD:
+                                    {
+                                        ++woodcount;
+                                    }
+                                    break;
 
-                            case ResourceType.RT_STONE:
-                            {
-                                ++stonecount;
+                                case ResourceType.RT_STONE:
+                                    {
+                                        ++stonecount;
+                                    }
+                                    break;
                             }
-                            break;
                         }
-                    }
-                    break;
+                        break;
                 }
             }
             if (m_SelectUnitList.Count > 0)

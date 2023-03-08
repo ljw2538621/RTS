@@ -9382,40 +9382,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: Capital
       objectReference: {fileID: 0}
-    - target: {fileID: 7538930764310973107, guid: 63a87e48130621341a06f5eec15ee735,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9057391720856528316, guid: 63a87e48130621341a06f5eec15ee735,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.92387956
-      objectReference: {fileID: 0}
-    - target: {fileID: 9057391720856528316, guid: 63a87e48130621341a06f5eec15ee735,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.38268343
-      objectReference: {fileID: 0}
-    - target: {fileID: 9057391720856528316, guid: 63a87e48130621341a06f5eec15ee735,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -45
-      objectReference: {fileID: 0}
-    - target: {fileID: 9057391720856528317, guid: 63a87e48130621341a06f5eec15ee735,
-        type: 3}
-      propertyPath: m_Name
-      value: BloodBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 9057391720861670088, guid: 63a87e48130621341a06f5eec15ee735,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9057391721103424540, guid: 63a87e48130621341a06f5eec15ee735,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 45a32afabd29c4847b15f9b30fe54019, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63a87e48130621341a06f5eec15ee735, type: 3}

@@ -28,10 +28,7 @@ public class Capital : BuildingBase
 
     private void Update()
     {
-        if (m_IsLive)
-        {
-            base.BaseUpdate();
-        }
+        base.BaseUpdate();
     }
 
     public override void OpenFunctionMenu()

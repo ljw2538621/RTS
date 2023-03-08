@@ -73,63 +73,63 @@ public class Player : MasterBase
                     switch (layerName)
                     {
                         case "Unit":
-                        {
-                            if (m_SelectUnitList.Count > 0)
                             {
-                                if (_hitpoint.collider.gameObject.GetComponent<UnitBase>().m_Master != gameObject)
+                                if (m_SelectUnitList.Count > 0)
                                 {
-                                    m_MouseState = MouseState.MS_ATTACK;
+                                    if (_hitpoint.collider.gameObject.GetComponent<UnitBase>().m_Master != gameObject)
+                                    {
+                                        m_MouseState = MouseState.MS_ATTACK;
+                                    }
+                                    else
+                                    {
+                                        m_MouseState = MouseState.MS_NORMAL;
+                                    }
                                 }
                                 else
                                 {
                                     m_MouseState = MouseState.MS_NORMAL;
                                 }
                             }
-                            else
-                            {
-                                m_MouseState = MouseState.MS_NORMAL;
-                            }
-                        }
-                        break;
+                            break;
 
                         case "Building":
-                        {
-                            if (m_SelectUnitList.Count > 0)
                             {
-                                if (_hitpoint.collider.gameObject.GetComponent<BuildingBase>().m_Master != gameObject)
+                                if (m_SelectUnitList.Count > 0)
                                 {
-                                    m_MouseState = MouseState.MS_ATTACK;
+                                    if (_hitpoint.collider.gameObject.GetComponent<BuildingBase>().m_Master != gameObject)
+                                    {
+                                        m_MouseState = MouseState.MS_ATTACK;
+                                    }
+                                    else
+                                    {
+                                        m_MouseState = MouseState.MS_NORMAL;
+                                    }
                                 }
                                 else
                                 {
                                     m_MouseState = MouseState.MS_NORMAL;
                                 }
                             }
-                            else
-                            {
-                                m_MouseState = MouseState.MS_NORMAL;
-                            }
-                        }
-                        break;
+                            break;
 
                         case "Terrain":
-                        {
-                            m_MouseState = MouseState.MS_NORMAL;
-                        }
-                        break;
-
-                        case "Resources":
-                        {
-                            if (m_SelectUnitList.Count > 0)
-                            {
-                                m_MouseState = MouseState.MS_GET;
-                            }
-                            else
                             {
                                 m_MouseState = MouseState.MS_NORMAL;
                             }
-                        }
-                        break;
+                            break;
+
+                        case "Resources":
+                            {
+                                if (m_SelectUnitList.Count > 0)
+                                {
+                                    m_MouseState = MouseState.MS_GET;
+                                }
+                                else
+                                {
+                                    m_MouseState = MouseState.MS_NORMAL;
+                                }
+                            }
+                            break;
                     }
 
                     if (Input.GetMouseButtonDown(0))
@@ -163,46 +163,46 @@ public class Player : MasterBase
                             switch (layerName)
                             {
                                 case "Unit":
-                                {
-                                    if (_hitpoint.collider.gameObject.GetComponent<UnitBase>().m_Master == gameObject)
                                     {
-                                        m_SelectUnitList.Add(_hitpoint.collider.gameObject);
-                                        _hitpoint.collider.gameObject.GetComponent<UnitBase>().BeSelect(true);
-                                        m_FunctionMenu.GetComponent<FunctionMenu>().OpenMenu(
-                                            _hitpoint.collider.gameObject.GetComponent<UnitBase>().m_Data.type);
+                                        if (_hitpoint.collider.gameObject.GetComponent<UnitBase>().m_Master == gameObject)
+                                        {
+                                            m_SelectUnitList.Add(_hitpoint.collider.gameObject);
+                                            _hitpoint.collider.gameObject.GetComponent<UnitBase>().BeSelect(true);
+                                            m_FunctionMenu.GetComponent<FunctionMenu>().OpenMenu(
+                                                _hitpoint.collider.gameObject.GetComponent<UnitBase>().m_Data.type);
+                                        }
+                                        m_MessageMenu.SetActive(true);
+                                        m_MessageMenu.GetComponent<MessageMenu>().SetMessage(_hitpoint.collider.gameObject, Message_Type.MT_UNIT);
                                     }
-                                    m_MessageMenu.SetActive(true);
-                                    m_MessageMenu.GetComponent<MessageMenu>().SetMessage(_hitpoint.collider.gameObject, Message_Type.MT_UNIT);
-                                }
-                                break;
+                                    break;
 
                                 case "Building":
-                                {
-                                    m_BuildingSelected = _hitpoint.collider.gameObject;
-                                    m_BuildingSelected.GetComponent<BuildingBase>().BeSelect(true, gameObject);
-                                    m_FunctionMenu.GetComponent<FunctionMenu>().CloseMenu();
-                                    m_BuildingSelected.GetComponent<BuildingBase>().OpenFunctionMenu();
-                                }
-                                break;
+                                    {
+                                        m_BuildingSelected = _hitpoint.collider.gameObject;
+                                        m_BuildingSelected.GetComponent<BuildingBase>().BeSelect(true, gameObject);
+                                        m_FunctionMenu.GetComponent<FunctionMenu>().CloseMenu();
+                                        m_BuildingSelected.GetComponent<BuildingBase>().OpenFunctionMenu();
+                                    }
+                                    break;
 
                                 case "Terrain":
-                                {
-                                    m_FunctionMenu.GetComponent<FunctionMenu>().CloseMenu();
-                                }
-                                break;
+                                    {
+                                        m_FunctionMenu.GetComponent<FunctionMenu>().CloseMenu();
+                                    }
+                                    break;
 
                                 case "Resources":
-                                {
-                                    m_SelectResource = _hitpoint.collider.gameObject;
-                                    m_SelectResource.GetComponent<ResourceBase>().BeSelect(true);
-                                }
-                                break;
+                                    {
+                                        m_SelectResource = _hitpoint.collider.gameObject;
+                                        m_SelectResource.GetComponent<ResourceBase>().BeSelect(true);
+                                    }
+                                    break;
 
                                 default:
-                                {
-                                    m_FunctionMenu.GetComponent<FunctionMenu>().CloseMenu();
-                                }
-                                break;
+                                    {
+                                        m_FunctionMenu.GetComponent<FunctionMenu>().CloseMenu();
+                                    }
+                                    break;
                             }
                         }
                     }
@@ -223,40 +223,40 @@ public class Player : MasterBase
                             switch (layerName)
                             {
                                 case "Terrain":
-                                {
-                                    if (m_SelectUnitList.Count > 0)
                                     {
-                                        for (int i = 0; i < m_SelectUnitList.Count; ++i)
+                                        if (m_SelectUnitList.Count > 0)
                                         {
-                                            m_SelectUnitList[i].GetComponent<UnitBase>().SetIdleState();
-                                            m_SelectUnitList[i].GetComponent<UnitBase>().Move(_hitpoint.point);
+                                            for (int i = 0; i < m_SelectUnitList.Count; ++i)
+                                            {
+                                                m_SelectUnitList[i].GetComponent<UnitBase>().SetIdleState();
+                                                m_SelectUnitList[i].GetComponent<UnitBase>().Move(_hitpoint.point);
+                                            }
+                                        }
+
+                                        if (m_BuildingSelected != null)
+                                        {
+                                            m_BuildingSelected.GetComponent<BuildingBase>().OnRigthMouseClicked();
                                         }
                                     }
-
-                                    if (m_BuildingSelected != null)
-                                    {
-                                        m_BuildingSelected.GetComponent<BuildingBase>().OnRigthMouseClicked();
-                                    }
-                                }
-                                break;
+                                    break;
 
                                 case "Unit":
-                                {
-                                    UnitAttack(_hitpoint.collider.gameObject);
-                                }
-                                break;
+                                    {
+                                        UnitAttack(_hitpoint.collider.gameObject);
+                                    }
+                                    break;
 
                                 case "Building":
-                                {
-                                    UnitAttack(_hitpoint.collider.gameObject);
-                                }
-                                break;
+                                    {
+                                        UnitAttack(_hitpoint.collider.gameObject);
+                                    }
+                                    break;
 
                                 case "Resources":
-                                {
-                                    UnitToResource(_hitpoint.collider.gameObject);
-                                }
-                                break;
+                                    {
+                                        UnitToResource(_hitpoint.collider.gameObject);
+                                    }
+                                    break;
                             }
                         }
                     }
@@ -273,12 +273,9 @@ public class Player : MasterBase
         {
             if (m_BuildingInHand != null)
             {
-                Ray _ray = new Ray();
-                _ray = m_GameCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+                Ray _ray = m_GameCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
                 RaycastHit _hitpoint;
                 int layerMask = 1 << LayerMask.NameToLayer("Terrain");
-                //layerMask |= 1 << LayerMask.NameToLayer("Obstacle");
-
                 if (Physics.Raycast(_ray, out _hitpoint, 999.0f, layerMask))
                 {
                     m_BuildingInHand.transform.position = _hitpoint.point + new Vector3(0, 0.0001f, 0);
