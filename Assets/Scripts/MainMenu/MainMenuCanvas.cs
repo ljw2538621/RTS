@@ -7,35 +7,74 @@ namespace MainMenuSpace
 {
     public class MainMenuCanvas : MonoBehaviour
     {
-        protected GameObject m_MainSelect;
-        protected Text m_BeginText;
-        protected float passTime;
+        public enum MenuState
+        {
+            MS_NONE,
+            MS_BEGIN,
+            MS_MIANSELECT,
+            MS_SETTING,
+            MS_GAMEINIT
+        }
 
-        void Awake()
+        protected GameObject m_MainSelect;
+        protected MenuState m_State;
+        protected MenuState m_ChangeState;
+
+        private void Awake()
         {
             m_MainSelect = transform.Find("MainSelect").gameObject;
-            m_BeginText = m_MainSelect.transform.Find("BeginText").GetComponent<Text>();
+            //m_BeginText = m_MainSelect.transform.Find("BeginText").GetComponent<Text>();
         }
 
-        void Start()
+        private void Start()
         {
-            passTime = 0.0f;
+            new Vector2(m_MainSelect.GetComponent<RectTransform>().sizeDelta.x, 0);
+            m_State = MenuState.MS_NONE;
         }
 
-        void Update()
+        private void Update()
         {
-            passTime += Time.deltaTime;
-            Color color = m_BeginText.color;
-            color.a = Mathf.Abs(Mathf.Sin(passTime));
-            m_BeginText.color = color;
-            if (color.a == 1.0f)
+            switch (m_State)
             {
-                Debug.Log(passTime);
+                case MenuState.MS_NONE:
+                    {
+                        if (!m_MainSelect.activeSelf)
+                        {
+                            m_MainSelect.SetActive(true);
+                        }
+                        m_State = MenuState.MS_BEGIN;
+                    }
+                    break;
+
+                case MenuState.MS_BEGIN:
+                    {
+                        if (!m_MainSelect.activeSelf)
+                        {
+                            m_State = m_ChangeState;
+                        }
+                    }
+                    break;
+
+                case MenuState.MS_MIANSELECT:
+                    {
+                        if (Input.anyKey)
+                        {
+                            m_State = MenuState.MS_NONE;
+                        }
+                    }
+                    break;
+
+                case MenuState.MS_SETTING:
+                    break;
+
+                case MenuState.MS_GAMEINIT:
+                    break;
             }
-            if (Input.anyKey)
-            {
-                Global.LoadScene("Playing");
-            }
+        }
+
+        public void SetChangeState(MenuState state)
+        {
+            m_ChangeState = state;
         }
     }
 }

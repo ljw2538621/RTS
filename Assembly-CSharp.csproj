@@ -265,6 +265,8 @@
     <Compile Include="Assets\Scripts\Playing\MasterBase.cs" />
     <Compile Include="Assets\RTS Engine\Effects\Scripts\EffectObjSpawner.cs" />
     <Compile Include="Assets\Scripts\Playing\UnitBtn.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\MainSelect.cs" />
+    <Compile Include="Assets\MusicMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Epic Toon FX\Prefabs\Environment\Environment FX.txt" />
